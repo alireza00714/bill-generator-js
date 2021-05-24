@@ -1,0 +1,136 @@
+* {
+  box-sizing: border-box;
+  font-family: "vazir";
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: #da291c;
+}
+
+@font-face {
+  font-family: "vazir";
+  src: url("./fonts/Vazir-Variable.eot");
+  src: url("./fonts/Vazir-Variable.eot?#iefix") format("embedded-opentype"),
+    url("./fonts/Vazir-Variable.woff2") format("woff2"), url("./fonts/Vazir-Variable.woff") format("woff"),
+    url("./fonts/Vazir-Variable.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "vazir-number";
+  src: url("./fonts/Vazir-Regular-FD.woff") format("woff");
+  src: url("./fonts/Vazir-Regular-FD.eot") format("embedded-opentype"),
+    url("./fonts/Vazir-Regular-FD.woff2") format("woff2"), url("./fonts/Vazir-Variable.woff") format("woff"),
+    url("./fonts/Vazir-Regular-FD.woff2") format("truetype");
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 1rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.menu {
+  height: 40rem;
+  border-radius: 1rem;
+  background-color: #f0f8ff;
+}
+
+.menu > .h3 {
+  font-weight: bold;
+}
+
+.menu > .menu-boxes {
+  overflow: auto;
+  height: 33rem;
+}
+
+.content-box {
+  height: 6rem;
+  background-color: white;
+}
+
+.content-box > .product-img {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 30%;
+}
+
+.content-box > div {
+  width: 70%;
+}
+
+.content-box > div > .product-title {
+  font-weight: bold;
+}
+
+.operations > .negative, .operations > .positive{
+  background-color: #9e1010;
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}
+
+.operations > .count{
+  background-color: #f0f8ff;
+  width: 2rem;
+  height: 1.25rem;
+}
+
+.digits {
+  font-family: "vazir-number";
+}
+
+.bill {
+  min-height: 20rem;
+  border-radius: 1rem;
+  background-color: #f0f8ff;
+}
+
+.discount-code > .check{
+  background-color: #9e1010;
+  padding: .5rem;
+  width: 2.25rem;
+  cursor: pointer;
+}
+
+.discount-code > input{
+  border: none;
+  outline: none;
+  direction: rtl;
+}
+
+.bill > .total-cost{
+  background-color: #ffc72c;
+}
+
+.total-cost span, .total-cost div{
+  font-weight: bold;
+}
+
+.bill > .payment{
+  background-color: #9e1010;
+  border: none;
+  outline: none;
+}
