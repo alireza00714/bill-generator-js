@@ -66,9 +66,13 @@ const cart = {
 
   discountState: {
     discount: false,
-    Golden: 30,
-    Silver: 20,
-    Bronze: 10,
+    discountType: null,
+  },
+
+  discountCodes: {
+    Golden: 70,
+    Silver: 80,
+    Bronze: 90,
   },
 
   calculatePrice: function () {
@@ -80,13 +84,24 @@ const cart = {
   },
 
   calculateTotal: function () {
-    return this.calculatePrice() + this.calculateService();
+    if (this.discountState.discount) {
+      switch (this.discountState.discountType) {
+        case "Golden":
+          return Math.round((this.calculatePrice() + this.calculateService()) * (this.discountCodes.Golden / 100));
+        case "Silver":
+          return Math.round((this.calculatePrice() + this.calculateService()) * (this.discountCodes.Silver / 100));
+        case "Bronze":
+          return Math.round((this.calculatePrice() + this.calculateService()) * (this.discountCodes.Bronze / 100));
+      }
+    } else return Math.round(this.calculatePrice() + this.calculateService());
   },
 
   updateItems: function (id, count, item) {
     const find = this.items.find((item) => item.id == id);
     if (find) this.items = this.items.map((item) => (item.id === id ? { ...item, count: count } : item));
     else this.items.push({ ...item, count: count });
+    this.items = this.items.filter((item) => item.count > 0);
+    console.log(this.items);
   },
 };
 
@@ -154,12 +169,48 @@ const renderBill = () => {
   document.getElementById("totalCost").textContent = cart.calculatePrice();
   document.getElementById("serviceCost").textContent = cart.calculateService();
   document.getElementById("totalPayment").textContent = cart.calculateTotal();
+  document.getElementById("discountInput").value = "";
+  if (cart.discountState.discountType != null)
+    document.getElementById("discountPercent").textContent =
+      100 - cart.discountCodes[`${cart.discountState.discountType}`];
+  else document.getElementById("discountPercent").textContent = 0;
 };
 
+const renderModalMessage = (message) => {
+  return `<p>${message}</p>
+  <button class="okButton text-white rounded-3 py-2 px-3" onclick="closeModal('modal')">باشه</button>`;
+};
+
+const openModal = (htmlId) => {
+  document.getElementById("overlay").classList.remove("hide");
+  document.getElementById(`${htmlId}`).classList.remove("close");
+  document.getElementById("overlay").classList.add("show");
+  document.getElementById(`${htmlId}`).classList.add("show");
+};
+
+const closeModal = (htmlId) => {
+  document.getElementById("overlay").classList.remove("show");
+  document.getElementById(`${htmlId}`).classList.remove("show");
+  document.getElementById("overlay").classList.add("hide");
+  document.getElementById(`${htmlId}`).classList.add("close");
+};
+
+//render for first time
 renderFoods();
 
-document.getElementById("discountCheck").addEventListener("scroll", function () {
-  const inputValue = document.getElementById("discountInput").value;
-  Object.keys(cart.discountState).includes(inputValue) ? cart.discountState.discount = true : false;
 
+//discount validation
+document.getElementById("discountCheck").addEventListener("click", function () {
+  const inputValue = document.getElementById("discountInput").value;
+  cart.discountState.discount = Object.keys(cart.discountCodes).includes(inputValue) ? true : false;
+  cart.discountState.discountType = Object.keys(cart.discountCodes).find((item) => item === inputValue);
+  renderBill();
+});
+
+//order confirmation
+document.getElementById("confirmOrder").addEventListener("click", function () {
+  openModal("modal");
+  if (cart.items.length === 0)
+    document.getElementById("modal").innerHTML = renderModalMessage(".شما هیچ محصولی انتخاب نکردید");
+  else document.getElementById("modal").innerHTML = renderModalMessage(".سفارش شما با موفقیت ثبت شد");
 });
