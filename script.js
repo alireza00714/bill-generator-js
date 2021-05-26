@@ -132,7 +132,7 @@ const renderFoods = () => {
     const cartItemCount = typeof cartItemSearch !== "undefined" ? cartItemSearch.count : 0;
     const cartEachItemCost = typeof cartItemSearch !== "undefined" ? cartItemCount * item.price : 0;
     return `
-        <div id=${item.id} class="col-6 mb-3">
+        <div id=${item.id} class="col-12 col-xl-6 mb-3">
             <div class="content-box shadow-sm position-relative rounded-3 d-flex">
               <div class="d-flex flex-column align-items-end p-2">
                 <p class="product-title m-0">${item.name}</p>
@@ -198,7 +198,6 @@ const closeModal = (htmlId) => {
 //render for first time
 renderFoods();
 
-
 //discount validation
 document.getElementById("discountCheck").addEventListener("click", function () {
   const inputValue = document.getElementById("discountInput").value;
@@ -212,5 +211,7 @@ document.getElementById("confirmOrder").addEventListener("click", function () {
   openModal("modal");
   if (cart.items.length === 0)
     document.getElementById("modal").innerHTML = renderModalMessage(".شما هیچ محصولی انتخاب نکردید");
-  else document.getElementById("modal").innerHTML = renderModalMessage(".سفارش شما با موفقیت ثبت شد");
+  else {
+    document.getElementById("modal").innerHTML = renderModalMessage(".سفارش شما با موفقیت ثبت شد");
+  }
 });
